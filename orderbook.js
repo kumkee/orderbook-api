@@ -50,12 +50,11 @@ const aggregateOrderBook = function (orderbook, precision = undefined) {
     // const orderbook = await exchange.fetchOrderBook('BNB/USDT', undefined, { 'limit': 5000 })
     const orderbook = await exchange.fetchOrderBook(symbol, undefined, options)
 
-    const tickers = await exchange.fetchTickers(symbol)
-    const change = tickers[symbol]['change']
+    const ticker = await exchange.fetchTicker(symbol)
 
-    const step = Math.abs(change)/10 // 0.01, 0.1, 0.5, 1.0, 2.5, 5.0, 10.0
-    console.log(change)
-    console.log("-----------------------------------------------")
+    let step = Number(ccxt.decimalToPrecision(ticker['last']/1000, ccxt.ROUND, 2, ccxt.SIGNIFICANT_DIGITS)); 
     console.log (aggregateOrderBook (orderbook, step))
+    console.log("-----------------------------------------------")
+    console.log(step)
 
 }) ('binance', 'BTC/USDT', {'limit':5000});
