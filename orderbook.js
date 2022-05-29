@@ -34,7 +34,7 @@ const aggregateOrderBook = function (orderbook, precision = undefined) {
     };
 }
 
-;(async function getOrderbook(exchangeId, symbol, options, stepDivider=1000) {
+;async function getOrderbook(exchangeId, symbol, options, stepDivider=1000) {
 
     const exchange = new ccxt[exchangeId]()
 
@@ -52,9 +52,17 @@ const aggregateOrderBook = function (orderbook, precision = undefined) {
 
     const ticker = await exchange.fetchTicker(symbol)
 
-    let step = Number(ccxt.decimalToPrecision(ticker['last']/1000, ccxt.ROUND, 2, ccxt.SIGNIFICANT_DIGITS)); 
+    let step = Number(ccxt.decimalToPrecision(ticker['last']/stepDivider, ccxt.ROUND, 2, ccxt.SIGNIFICANT_DIGITS)); 
     console.log (aggregateOrderBook (orderbook, step))
     console.log("-----------------------------------------------")
     console.log(step)
 
-}) ('binance', 'BTC/USDT', {'limit':5000});
+};
+
+function main() {
+    getOrderbook('binance', 'BTC/USDT', {'limit':5000});
+};
+
+if (require.main == module) {
+    main()
+}
