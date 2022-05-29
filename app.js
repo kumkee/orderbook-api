@@ -9,7 +9,8 @@ app.get('/', (req, res) => {
   if (!req.query.exchange) {req.query.exchange = 'binance';}
   if (!req.query.divider) {req.query.divider = 1000;}
   ordbook.getOrderbook(req.query.exchange, req.query.symbol, {'limit':5000}, req.query.divider)
-    .then(v => res.send(v));
+    .then(v => res.send(v))
+    .catch(err => res.send(`${err}`));
 })
 
 app.listen(port, () => {
