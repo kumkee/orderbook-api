@@ -34,7 +34,7 @@ const aggregateOrderBook = function (orderbook, precision = undefined) {
     };
 }
 
-;async function getOrderbook(exchangeId, symbol, options, stepDivider=1000) {
+;async function getOrderbook(exchangeId, symbol, options, priceDivider=1000) {
 
     const exchange = new ccxt[exchangeId]()
 
@@ -52,7 +52,7 @@ const aggregateOrderBook = function (orderbook, precision = undefined) {
 
     const ticker = await exchange.fetchTicker(symbol)
 
-    let step = Number(ccxt.decimalToPrecision(ticker['last']/stepDivider, ccxt.ROUND, 2, ccxt.SIGNIFICANT_DIGITS)); 
+    let step = Number(ccxt.decimalToPrecision(ticker['last']/priceDivider, ccxt.ROUND, 2, ccxt.SIGNIFICANT_DIGITS)); 
     
     let ret = aggregateOrderBook(orderbook, step);
     ret['timestamp'] = ticker['timestamp'];
