@@ -66,6 +66,8 @@ function main() {
     getOrderbook('binance', 'BTC/USDT', {'limit':5000}).then(v => console.log(v));
 };
 
+exports.getOrderbook = getOrderbook;
+
 if (require.main == module) {
     main()
 }
