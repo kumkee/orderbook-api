@@ -5,6 +5,8 @@ const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
   //res.send('Hello World!');
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Cache-Control', 's-max-age=1, stale-while-revalidate');
   if (!req.query.symbol) {req.query.symbol = 'BTC/USDT';}
   if (!req.query.exchange) {req.query.exchange = 'binance';}
   if (!req.query.divider) {req.query.divider = 1000;}
